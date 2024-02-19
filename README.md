@@ -3,13 +3,13 @@ Amazon ECS 또는 AWS Batch를 사용하여 GPU 지원 작업을 실행하기 �
 
 ### 전제 조건
 - AWS 계정
-- Terraform 설치
-- AWS CLI 설치 및 구성
+- Terraform [설치](https://developer.hashicorp.com/terraform/install)
+- AWS CLI [설치 및 구성](https://docs.aws.amazon.com/ko_kr/cli/latest/userguide/getting-started-install.html)
 
 ### 설치 방법
 1. 이 리포지토리를 클론합니다.
 ```
-git clone <repository-url>
+git clone https://github.com/didhd/aws-gpu-ecs.git
 ```
 2. Terraform 초기화:
 ```shell
@@ -32,7 +32,7 @@ aws ecs run-task \
     --region us-east-2
 ```
 
-그리고 AWS Batch 작업도 실행할 수 있습니다. (예시))
+그리고 AWS Batch 작업도 실행할 수 있습니다. (예시)
 ```
 aws batch submit-job \
     --job-name example-job \

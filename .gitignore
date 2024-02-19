@@ -1,0 +1,23 @@
+# Terraform directory & state files
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform*
+
+# Log files
+*.log
+
+# Ignore secret files
+*.pem
+*.key
+
+# Ignore IDE and editor directories
+.idea/
+*.swp
+.vscode/
+
+# Ignore executable files
+*.exe
+*.dll
+*.so
+*.dylib

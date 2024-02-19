@@ -21,7 +21,7 @@ terraform apply
 ```
 
 ## 사용 방법
-Terraform이 생성되면, Output으로 두개의 명령어가 출력됩니다. 
+Terraform 명령어가 성공적으로 실행된 후, Output으로 두개의 명령어가 출력됩니다. 
 다음 AWS CLI 명령어를 사용하여 ECS 작업을 실행할 수 있습니다. (예시)
 ```
 aws ecs run-task \

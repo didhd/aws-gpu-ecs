@@ -1,4 +1,4 @@
-# aws-gpu-ecs
+# Run GPU workloads on Amazon ECS or AWS Batch
 Amazon ECS 또는 AWS Batch를 사용하여 GPU 지원 작업을 실행하기 위한 Terraform 코드입니다. `g4dn.xlarge` 인스턴스를 예시로 사용하였습니다.
 
 ### 전제 조건

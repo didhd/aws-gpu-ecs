@@ -6,6 +6,18 @@ resource "aws_ecs_cluster" "my_cluster" {
   name = "my-ecs-cluster"
 }
 
+resource "aws_ecs_cluster_capacity_providers" "example" {
+  cluster_name = aws_ecs_cluster.my_cluster.name
+
+  capacity_providers = [aws_ecs_capacity_provider.ecs_asg_capacity_provider.name]
+
+  default_capacity_provider_strategy {
+    capacity_provider = aws_ecs_capacity_provider.ecs_asg_capacity_provider.name
+    weight            = 1
+    base              = 1
+  }
+}
+
 resource "aws_iam_role" "ecs_instance_role" {
   name = "my-ecs-instance-role"
 
@@ -73,8 +85,8 @@ resource "aws_autoscaling_group" "ecs_asg" {
     version = "$Latest"
   }
 
-  min_size            = 1
-  max_size            = 3
+  min_size            = 0
+  max_size            = 10
   desired_capacity    = 2
   vpc_zone_identifier = [for id in aws_subnet.private_subnet.*.id : id]
 
@@ -88,5 +100,22 @@ resource "aws_autoscaling_group" "ecs_asg" {
     key                 = "ecsCluster"
     value               = aws_ecs_cluster.my_cluster.name
     propagate_at_launch = true
+  }
+}
+
+
+resource "aws_ecs_capacity_provider" "ecs_asg_capacity_provider" {
+  name = "my-ecs-capacity-provider"
+
+  auto_scaling_group_provider {
+    auto_scaling_group_arn         = aws_autoscaling_group.ecs_asg.arn
+    managed_termination_protection = "DISABLED" # 필요에 따라 "ENABLED" 또는 "DISABLED"
+
+    managed_scaling {
+      status                    = "ENABLED" # 필요에 따라 "ENABLED" 또는 "DISABLED"
+      target_capacity           = 100       # 원하는 타겟 용량 비율
+      minimum_scaling_step_size = 1         # 최소 스케일링 단계 크기
+      maximum_scaling_step_size = 100       # 최대 스케일링 단계 크기
+    }
   }
 }

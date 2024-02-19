@@ -45,7 +45,8 @@ aws batch submit-job \
 본 프로젝트의 Terraform 코드는 다음과 같은 Amazon ECS 리소스를 설정합니다:
 
 1. **ECS 클러스터**: 컨테이너화된 애플리케이션을 실행하기 위한 클러스터를 생성합니다.
-2. **Task Definition**: GPU를 사용하는 컨테이너 작업을 정의합니다. 이 작업 정의는 g4dn.xlarge 인스턴스에서 실행되도록 구성됩니다.
+2. **Task Definition**: GPU를 사용하는 컨테이너 작업을 정의합니다. 이 작업 정의는 `g4dn.xlarge` 인스턴스에서 실행되도록 구성됩니다.
+3. **Auto Scaling Group**: `g4dn.xlarge`를 사용하도록 구성된 Auto Scaling Group입니다.
 
 ### AWS Batch 환경 설정
 

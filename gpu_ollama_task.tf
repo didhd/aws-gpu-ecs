@@ -40,11 +40,9 @@ resource "aws_ecs_task_definition" "ollama_gpu_task" {
         }
       }
 
-      # Comando para iniciar Ollama y cargar un modelo específico
+      # Comando para iniciar el servidor Ollama
       command = [
-        "sh", 
-        "-c", 
-        "ollama serve & sleep 10 && ollama pull llama2 && tail -f /dev/null"
+        "ollama", "serve"
       ]
     }
   ])

@@ -4,6 +4,12 @@ variable "aws_region" {
   default     = "eu-west-1"
 }
 
+variable "folding_passkey" {
+  description = "Passkey for Folding@home (get it from https://apps.foldingathome.org/getpasskey)"
+  type        = string
+  sensitive   = true
+}
+
 provider "aws" {
   region = var.aws_region
 }

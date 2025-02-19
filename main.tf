@@ -1,5 +1,11 @@
+variable "aws_region" {
+  description = "AWS region to deploy resources"
+  type        = string
+  default     = "eu-west-1"
+}
+
 provider "aws" {
-  region = "eu-west-1"
+  region = var.aws_region
 }
 
 resource "aws_ecs_cluster" "my_cluster" {

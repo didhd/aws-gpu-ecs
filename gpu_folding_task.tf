@@ -1,3 +1,4 @@
+/*
 resource "aws_ecs_task_definition" "folding_gpu_task" {
   family                   = "folding-gpu-task"
   requires_compatibilities = ["EC2"]
@@ -95,3 +96,4 @@ resource "aws_ecs_service" "folding_service" {
     rollback = true
   }
 }
+*/

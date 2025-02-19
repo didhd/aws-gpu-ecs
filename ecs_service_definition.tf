@@ -1,3 +1,4 @@
+/*
 resource "aws_ecs_service" "gpu_service" {
   name            = "gpu-service"
   cluster         = aws_ecs_cluster.my_cluster.id
@@ -38,3 +39,4 @@ resource "aws_ecs_service" "gpu_service" {
     ignore_changes = [desired_count]
   }
 }
+*/

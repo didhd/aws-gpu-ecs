@@ -3,7 +3,7 @@ resource "aws_ecs_task_definition" "ollama_gpu_task" {
   requires_compatibilities = ["EC2"]
   network_mode            = "awsvpc"
   cpu                     = "2048"
-  memory                  = "8192"  # Ollama necesita bastante memoria para los modelos
+  memory                  = "8192"  # Ollama require a lot of memory for the models
 
   execution_role_arn = aws_iam_role.ecs_tasks_execution_role.arn
   task_role_arn      = aws_iam_role.ecs_tasks_role.arn
@@ -39,11 +39,6 @@ resource "aws_ecs_task_definition" "ollama_gpu_task" {
           awslogs-stream-prefix = "ollama"
         }
       }
-
-      # Comando para iniciar el servidor Ollama
-      command = [
-        "ollama", "serve"
-      ]
     }
   ])
 }
@@ -53,7 +48,7 @@ resource "aws_cloudwatch_log_group" "ollama_logs" {
   retention_in_days = 30
 }
 
-# Security group específico para Ollama
+# Ollama specific Security Group
 resource "aws_security_group" "ollama_sg" {
   name        = "ollama-sg"
   description = "Security group for Ollama API"
@@ -63,7 +58,7 @@ resource "aws_security_group" "ollama_sg" {
     from_port   = 11434
     to_port     = 11434
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]  # Solo accesible desde la VPC
+    cidr_blocks = ["10.0.0.0/16"]  # Only visible from VPC
   }
 
   egress {

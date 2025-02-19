@@ -3,7 +3,6 @@ resource "aws_ecs_service" "gpu_service" {
   cluster         = aws_ecs_cluster.my_cluster.id
   task_definition = aws_ecs_task_definition.gpu_task.arn
   desired_count   = 1
-  launch_type     = "EC2"
 
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100

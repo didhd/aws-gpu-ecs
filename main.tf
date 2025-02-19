@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-2"
+  region = "eu-west-1"
 }
 
 resource "aws_ecs_cluster" "my_cluster" {
@@ -87,7 +87,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
 
   min_size            = 0
   max_size            = 10
-  desired_capacity    = 2
+  desired_capacity    = 1
   vpc_zone_identifier = [for id in aws_subnet.private_subnet.*.id : id]
 
   tag {

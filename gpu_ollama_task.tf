@@ -1,9 +1,9 @@
 resource "aws_ecs_task_definition" "ollama_gpu_task" {
   family                   = "ollama-gpu-task"
   requires_compatibilities = ["EC2"]
-  network_mode            = "awsvpc"
-  cpu                     = "2048"
-  memory                  = "8192"  # Ollama require a lot of memory for the models
+  network_mode             = "awsvpc"
+  cpu                      = "2048"
+  memory                   = "8192" # Ollama require a lot of memory for the models
 
   execution_role_arn = aws_iam_role.ecs_tasks_execution_role.arn
   task_role_arn      = aws_iam_role.ecs_tasks_role.arn
@@ -58,7 +58,7 @@ resource "aws_security_group" "ollama_sg" {
     from_port   = 11434
     to_port     = 11434
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]  # Only visible from VPC
+    cidr_blocks = ["10.0.0.0/16"] # Only visible from VPC
   }
 
   egress {
@@ -87,8 +87,8 @@ resource "aws_ecs_service" "ollama_service" {
 
   capacity_provider_strategy {
     capacity_provider = aws_ecs_capacity_provider.ecs_asg_capacity_provider.name
-    weight           = 1
-    base            = 1
+    weight            = 1
+    base              = 1
   }
 
   placement_constraints {

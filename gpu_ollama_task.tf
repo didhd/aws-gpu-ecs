@@ -16,13 +16,6 @@ resource "aws_ecs_task_definition" "ollama_gpu_task" {
       memory    = 8192
       essential = true
 
-      environment = [
-        {
-          name  = "NVIDIA_VISIBLE_DEVICES"
-          value = "all"
-        }
-      ]
-
       resourceRequirements = [
         {
           type  = "GPU"

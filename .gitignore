@@ -10,6 +10,7 @@
 # Ignore secret files
 *.pem
 *.key
+terraform.tfvars
 
 # Ignore IDE and editor directories
 .idea/

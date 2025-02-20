@@ -32,7 +32,7 @@ resource "aws_ecs_task_definition" "gpu_task" {
         logDriver = "awslogs",
         options = {
           awslogs-group         = "/ecs/ecs-gpu-task-def",
-          awslogs-region        = "us-east-2",
+          awslogs-region        = var.aws_region,
           awslogs-stream-prefix = "ecs",
         },
       },
@@ -80,6 +80,25 @@ resource "aws_iam_role_policy_attachment" "ecs_tasks_execution_role_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+resource "aws_iam_role_policy" "ecs_cloudwatch_logs" {
+  name = "ecs-cloudwatch-logs"
+  role = aws_iam_role.ecs_tasks_execution_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Resource = "${aws_cloudwatch_log_group.ecs_logs.arn}:*"
+      }
+    ]
+  })
+}
+
 resource "aws_cloudwatch_log_group" "ecs_logs" {
   name = "/ecs/ecs-gpu-task-def"
 
@@ -93,7 +112,7 @@ aws ecs run-task \
     --task-definition ecs-gpu-task-def \
     --placement-constraints "type=memberOf,expression=attribute:ecs.instance-type == g4dn.xlarge" \
     --network-configuration "awsvpcConfiguration={subnets=[${join(",", formatlist("\"%s\"", aws_subnet.public_subnet[*].id))}],securityGroups=[\"${aws_security_group.ecs_tasks_sg.id}\"]}" \
-    --region us-east-2
+    --region ${var.aws_region}
 EOH
   description = "Run this AWS CLI command to start the ECS task with the specified configuration."
 }
